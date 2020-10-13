@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: busybox
-    image: __IMAGE_
+    image: __IMAGE__
     args:
     - sleep
     - "1000000"
