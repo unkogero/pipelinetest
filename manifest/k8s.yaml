@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: busybox
-    image: __IMAGE__
+    image: image-registry.openshift-image-registry.svc:5000/pipelines-tutorial/actionstest:cee87940d3b16598df8e2cf474f2f47c8f2dad27:cee87940d3b16598df8e2cf474f2f47c8f2dad27
     args:
     - sleep
     - "1000000"
