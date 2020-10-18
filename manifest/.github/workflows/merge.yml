@@ -1,0 +1,19 @@
+name: merge
+
+on:
+  repository_dispatch:
+    types: [event_type]
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: unkogero/pipelinetest
+          ref: master
+      - name: commit manifests
+        run: |
+			ls -laR
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
