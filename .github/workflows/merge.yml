@@ -12,8 +12,8 @@ jobs:
         with:
           repository: unkogero/pipelinetest
           ref: master
-      - name: commit manifests
+      - name: post request
         run: |
-			    ls -laR
+          ls -lFR
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
