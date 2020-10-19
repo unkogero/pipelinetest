@@ -2,7 +2,7 @@ name: Manually triggered workflow
 on:
   workflow_dispatch:
     inputs:
-      commithash:
+      image-name:
         description: 'image-name'
         required: true
         default: 'aaa/bbb:abcdef'
