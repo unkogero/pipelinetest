@@ -17,15 +17,16 @@ jobs:
         with:
           repository: unkogero/pipelinetest
           ref: master
-      - name: commit manifests
-
+      - name: update
         run: |
           echo "${IMAGE-NAME}"
+
 
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           cd manifest/testapp/overlays/prd
 
-          kustomize edit set image image-name=${IMAGE-NAME}
+          
+          kustomize edit set image image-name="kkkkkkkkk:sssss"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
