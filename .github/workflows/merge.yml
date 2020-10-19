@@ -1,18 +1,19 @@
-name: merge
-
+name: Manually triggered workflow
 on:
-  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Person to greet'
+        required: true
+        default: 'Mona the Octocat'
+      home:
+        description: 'location'
+        required: false
 
 jobs:
-  merge:
+  say_hello:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          repository: unkogero/pipelinetest
-          ref: master
-      - name: post request
-        run: |
-          ls -lFR
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+    - run: |
+        echo "Hello ${{ github.event.inputs.name }}!"
+        echo "- in ${{ github.event.inputs.home }}!"
