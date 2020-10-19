@@ -8,22 +8,24 @@ on:
         default: 'aaa/bbb:abcdef'
 
 jobs:
-  say_hello:
+  update_manifest:
     runs-on: ubuntu-latest
-
+    env:
+      IMAGE-NAME: ${{github.event.image-name}}
     steps:
       - uses: actions/checkout@v2
         with:
           repository: unkogero/pipelinetest
           ref: master
       - name: commit manifests
+
         run: |
-          echo "${{ github.event.image-name }}"
+          echo "${IMAGE-NAME}"
 
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           cd manifest/testapp/overlays/prd
 
-          kustomize edit set image image-name=${{ github.event.image-name }}
+          kustomize edit set image image-name=${IMAGE-NAME}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
