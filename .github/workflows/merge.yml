@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       image-name:
-        description: 'image-name'
+        description: 'imagename'
         required: true
         default: 'aaa/bbb:abcdef'
 
@@ -11,7 +11,7 @@ jobs:
   update_manifest:
     runs-on: ubuntu-latest
     env:
-      IMAGE-NAME: ${{github.event.inputs.image-name}}
+      IMAGE-NAME: ${{github.event.inputs.imagename}}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -20,13 +20,14 @@ jobs:
       - name: update
         run: |
           echo "${IMAGE-NAME}"
+          echo "${{github.event.inputs.imagename}}"
 
 
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           cd manifest/testapp/overlays/prd
 
           
-          kustomize edit set image image-name=${IMAGE-NAME}
+          kustomize edit set image image-name=${{github.event.inputs.imagename}}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
