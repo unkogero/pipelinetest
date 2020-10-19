@@ -2,7 +2,7 @@ name: Manually triggered workflow
 on:
   workflow_dispatch:
     inputs:
-      image-name:
+      imagename:
         description: 'imagename'
         required: true
         default: 'aaa/bbb:abcdef'
