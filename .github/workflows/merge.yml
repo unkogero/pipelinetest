@@ -11,7 +11,7 @@ jobs:
   update_manifest:
     runs-on: ubuntu-latest
     env:
-      IMAGE-NAME: ${{github.event.image-name}}
+      IMAGE-NAME: ${{github.event.inputs.image-name}}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -26,7 +26,7 @@ jobs:
           cd manifest/testapp/overlays/prd
 
           
-          kustomize edit set image image-name="kkkkkkkkk:sssss"
+          kustomize edit set image image-name=${IMAGE-NAME}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
