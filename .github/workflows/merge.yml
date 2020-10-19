@@ -10,8 +10,6 @@ on:
 jobs:
   update_manifest:
     runs-on: ubuntu-latest
-    env:
-      IMAGE-NAME: ${{github.event.inputs.imagename}}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -19,9 +17,7 @@ jobs:
           ref: master
       - name: update
         run: |
-          echo "${IMAGE-NAME}"
           echo "${{github.event.inputs.imagename}}"
-
 
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           cd manifest/testapp/overlays/prd
