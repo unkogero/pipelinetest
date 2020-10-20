@@ -43,6 +43,14 @@ oc -n argocd patch deployment argocd-server -p $PATCH
 
 oc -n argocd create route edge argocd-server --service=argocd-server --port=http --insecure-policy=Redirect
 
+
+# Download the argocd binary, place it under /usr/local/bin and give it execution permissions
+
+curl -L https://github.com/argoproj/argo-cd/releases/download/v1.2.2/argocd-linux-amd64 -o ./argocd
+
+chmod +x ./argocd
+
+
 # Get ArgoCD Server Route Hostname
 
 ARGOCD_ROUTE=$(oc -n argocd get route argocd-server -o jsonpath='{.spec.host}')
@@ -53,7 +61,7 @@ argocd --insecure --grpc-web login ${ARGOCD_ROUTE}:443 --username admin --passwo
 
 # Update admin's password
 
-argocd --insecure --grpc-web --server ${ARGOCD_ROUTE}:443 account update-password --current-password ${ARGOCD_SERVER_PASSWORD} --new-password
+argocd --insecure --grpc-web --server ${ARGOCD_ROUTE}:443 account update-password --current-password ${ARGOCD_SERVER_PASSWORD} --new-password [pass]
 
 
 https://github.com/argoproj/argocd-example-apps

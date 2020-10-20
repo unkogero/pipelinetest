@@ -5,3 +5,7 @@ resources:
 namePrefix: production-
 patchesStrategicMerge:
 - patch-replicas.yaml
+images:
+- name: image-name
+  newName: image-registry.openshift-image-registry.svc:5000/pipelines-tutorial/actionstest
+  newTag: 23f82bc2e7ce06df01e0d85e703fcfbbdf740dbe
