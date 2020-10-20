@@ -1,3 +1,4 @@
+```
 curl -XPOST \
 -H "Authorization: token xxxxx" \
 -H "Accept: application/vnd.github.v3+json" \
@@ -10,11 +11,11 @@ curl -XPOST \
 -H "Accept: application/vnd.github.v3+json" \
 https://api.github.com/repos/unkogero/pipelinetest/actions/workflows/merge.yml/dispatches \
 -d '{"ref":"master","inputs": {"imagename":"bbb/ccc:ddd"}}'
-
+```
 
 =======================
 
-
+```
 # argoCD
 https://www.openshift.com/blog/introduction-to-gitops-with-openshift
 https://argoproj.github.io/argo-cd/getting_started/
@@ -62,14 +63,14 @@ argocd --insecure --grpc-web login ${ARGOCD_ROUTE}:443 --username admin --passwo
 # Update admin's password
 
 argocd --insecure --grpc-web --server ${ARGOCD_ROUTE}:443 account update-password --current-password ${ARGOCD_SERVER_PASSWORD} --new-password [pass]
-
+```
 
 https://github.com/argoproj/argocd-example-apps
 ArgoCD Example Apps
 
 
 
-
+```
 #Multi
 container-lab$ ./argocd cluster list
 SERVER                          NAME  STATUS      MESSAGE
@@ -85,6 +86,6 @@ INFO[0000] ClusterRole "argocd-manager-role" created
 INFO[0000] ClusterRoleBinding "argocd-manager-role-binding" created, bound "argocd-manager" to "argocd-manager-role" 
 Cluster 'default/c104-e-us-east-containers-cloud-ibm-com:32572/IAM#aaa@bbb.com' added
 container-lab$ 
-
+```
 
 https://www.openshift.com/blog/multi-cluster-management-with-gitops
