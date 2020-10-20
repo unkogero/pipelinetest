@@ -4,3 +4,7 @@ resources:
 - deployment.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+images:
+- name: image-name
+  newName: aaa/bbb/ccc
+  newTag: ddd

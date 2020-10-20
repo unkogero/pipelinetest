@@ -20,7 +20,7 @@ jobs:
           echo "${{github.event.inputs.imagename}}"
 
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-          cd manifest/testapp/overlays/prd
+          cd manifest/testapp/
 
           
           kustomize edit set image image-name=${{github.event.inputs.imagename}}
