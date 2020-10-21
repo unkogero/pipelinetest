@@ -93,6 +93,7 @@ https://www.openshift.com/blog/multi-cluster-management-with-gitops
 
 
 ===kustomize
+```
 ubuntu@pc:testapp/base$ kustomize build .
 apiVersion: apps/v1
 kind: Deployment
@@ -175,3 +176,4 @@ spec:
       - image: 111/222/333:444
         name: container-name
 ubuntu@pc:testapp/base$
+```
