@@ -89,3 +89,89 @@ container-lab$
 ```
 
 https://www.openshift.com/blog/multi-cluster-management-with-gitops
+
+
+
+===kustomize
+ubuntu@pc:testapp/base$ kustomize build .
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-label
+  name: testappdep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-label
+  template:
+    metadata:
+      labels:
+        app: app-label
+    spec:
+      containers:
+      - image: aaa/bbb/ccc:ddd
+        name: container-name
+ubuntu@pc:testapp/base$ kustomize build ../overlays/prd/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-label
+  name: production-testappdep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-label
+  template:
+    metadata:
+      labels:
+        app: app-label
+    spec:
+      containers:
+      - image: aaa/bbb/ccc:ddd
+        name: container-name
+ubuntu@pc:testapp/base$ kustomize edit set image image-name=111/222/333:444
+ubuntu@pc:testapp/base$ kustomize build .
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-label
+  name: testappdep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-label
+  template:
+    metadata:
+      labels:
+        app: app-label
+    spec:
+      containers:
+      - image: 111/222/333:444
+        name: container-name
+ubuntu@pc:testapp/base$ kustomize build ../overlays/prd/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-label
+  name: production-testappdep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-label
+  template:
+    metadata:
+      labels:
+        app: app-label
+    spec:
+      containers:
+      - image: 111/222/333:444
+        name: container-name
+ubuntu@pc:testapp/base$
