@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
 - ../../base
 namespace: default
-namePrefix: production-
+namePrefix: staging-
 patchesStrategicMerge:
 - patch-replicas.yaml
