@@ -1,0 +1,8 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: nodejs
+  namespace: apptest
+spec:
+  successfulBuildsHistoryLimit: 15
+  failedBuildsHistoryLimit: 25

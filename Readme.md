@@ -16,6 +16,33 @@ https://api.github.com/repos/unkogero/pipelinetest/actions/workflows/merge.yml/d
 =======================
 
 ```
+oc create namespace argocd
+wget https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+oc apply -n argocd -f ./install.yaml
+
+ARGOCD_SERVER_PASSWORD=$(oc -n argocd get pod -l "app.kubernetes.io/name=argocd-server" -o jsonpath='{.items[*].metadata.name}')
+
+oc -n argocd patch deployment argocd-server -p '{"spec":{"template":{"spec":{"$setElementOrder/containers":[{"name":"argocd-server"}],"containers":[{"command":["argocd-server","--insecure","--staticassets","/shared/app"],"name":"argocd-server"}]}}}}'
+
+oc -n argocd create route edge argocd-server --service=argocd-server --port=http --insecure-policy=Redirect
+
+
+VERSION=$(curl --silent "https://api.github.com/repos/argoproj/argo-cd/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
+
+curl -sSL -o ./argocd https://github.com/argoproj/argo-cd/releases/download/$VERSION/argocd-linux-amd64
+chmod +x ./argocd
+
+ARGOCD_ROUTE=$(oc -n argocd get route argocd-server -o jsonpath='{.spec.host}')
+
+./argocd --insecure --grpc-web login ${ARGOCD_ROUTE}:443 --username admin --password ${ARGOCD_SERVER_PASSWORD}
+
+./argocd --insecure --grpc-web --server ${ARGOCD_ROUTE}:443 account update-password --current-password ${ARGOCD_SERVER_PASSWORD} --new-password [pass]
+
+
+
+```
+
+```
 # argoCD
 https://www.openshift.com/blog/introduction-to-gitops-with-openshift
 https://argoproj.github.io/argo-cd/getting_started/
@@ -27,7 +54,6 @@ oc create namespace argocd
 # Apply the ArgoCD Install Manifest
 
 oc -n argocd apply -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.2.2/manifests/install.yaml
-oc -n argocd apply -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 
 # Get the ArgoCD Server password

@@ -1,0 +1,79 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: '*'
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: 'https://github.com/sclorg/nodejs-ex.git'
+    deployment.kubernetes.io/revision: '2'
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"nodejs:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"nodejs\")].image"}]
+  selfLink: /apis/apps/v1/namespaces/apptest/deployments/nodejs
+  resourceVersion: '200561'
+  name: nodejs
+  uid: f0fa0411-d6f1-4fd5-84cf-f8374ba24ee6
+  creationTimestamp: '2020-10-23T06:23:48Z'
+  generation: 2
+  namespace: apptest
+  labels:
+    app: nodejs
+    app.kubernetes.io/component: nodejs
+    app.kubernetes.io/instance: nodejs
+    app.kubernetes.io/name: nodejs
+    app.kubernetes.io/part-of: nodejs-app
+    app.openshift.io/runtime: nodejs
+    app.openshift.io/runtime-version: 10-SCL
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nodejs
+        deploymentconfig: nodejs
+    spec:
+      containers:
+        - name: nodejs
+          image: >-
+            image-name
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 2
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2020-10-23T06:25:00Z'
+      lastTransitionTime: '2020-10-23T06:25:00Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2020-10-23T06:25:00Z'
+      lastTransitionTime: '2020-10-23T06:23:48Z'
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "nodejs-6df8c98995" has successfully progressed.

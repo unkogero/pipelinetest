@@ -1,0 +1,7 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: nodejs
+  namespace: apptest
+status:
+  dockerImageRepository: 'image-registry.openshift-image-registry.svc:5000/apptest/nodejsprd'

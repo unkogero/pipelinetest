@@ -2,6 +2,10 @@ commonLabels:
   app: app-label
 resources:
 - deployment.yaml
+- route.yaml
+- imagestream.yaml
+- buildconfig.yaml
+- deploy2.yaml
 configMapGenerator:
 - name: testconfig
   literals:
